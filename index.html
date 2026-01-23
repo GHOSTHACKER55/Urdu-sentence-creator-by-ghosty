@@ -71,8 +71,12 @@
     transition: 0.3s;
   }
 
+  /* Underlined placeholders with blue glow */
   input::placeholder, textarea::placeholder {
-    color: #ccc;
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: bold;
   }
 
   input:focus, textarea:focus {
@@ -136,7 +140,6 @@
     font-size: 26px;
     margin-right: 10px;
   }
-
 </style>
 </head>
 <body>
@@ -178,7 +181,7 @@
   }
 
   function joinGroup() {
-    const groupLink = 'https://chat.whatsapp.com/HVM9Spvm7HVGLERj8yo9kS'; // replace with your WhatsApp group link
+    const groupLink = 'https://chat.whatsapp.com/HVM9Spvm7HVGLERj8yo9kS';
     window.open(groupLink, '_blank');
   }
 </script>
