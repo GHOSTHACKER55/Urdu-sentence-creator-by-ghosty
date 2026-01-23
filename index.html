@@ -1,147 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>👻 Ghosty Urdu Converter</title>
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Tajawal:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    background: #05060a;
-    font-family: 'Tajawal', sans-serif;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+body {
+  margin:0;
+  background:#05060a;
+  font-family:'Tajawal', sans-serif;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
 
-  .converter-card {
-    background: rgba(20,25,40,0.95);
-    padding: 30px;
-    border-radius: 25px;
-    max-width: 550px;
-    width: 95%;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.8);
-  }
+.converter-card {
+  background:rgba(20,25,40,0.95);
+  padding:30px;
+  border-radius:25px;
+  max-width:550px;
+  width:95%;
+  box-shadow:0 8px 25px rgba(0,0,0,0.8);
+  text-align:center;
+}
 
-  .converter-card h1 {
-    font-family: 'Almarai', sans-serif;
-    text-align: center;
-    color: #ffd700;
-    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd70066;
-    margin-bottom: 30px;
-  }
+.converter-card h1 {
+  font-family:'Almarai', sans-serif;
+  font-size:36px;
+  color:#ffd700;
+  text-shadow:0 0 10px #ffd700, 0 0 20px #ffd70066;
+  margin-bottom:30px;
+}
 
-  .input-box, .output-box {
-    width: 100%;
-    padding: 16px 20px;
-    border-radius: 15px;
-    border: none;
-    font-size: 18px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  }
+.input-box, .output-box {
+  width:100%;
+  padding:16px 20px;
+  border-radius:15px;
+  border:none;
+  font-size:18px;
+  margin-bottom:20px;
+  box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
 
-  .input-box {
-    background: #1a75ff; /* blue input box */
-    color: #fff;
-  }
+.input-box {
+  background:#1a75ff;
+  color:#fff;
+}
 
-  .input-box::placeholder {
-    color: #cce0ff;
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    font-weight: 500;
-  }
+.input-box::placeholder {
+  color:#cce0ff;
+  text-decoration:underline;
+  text-underline-offset:4px;
+  font-weight:500;
+}
 
-  .output-box {
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    font-family: 'Noto Nastaliq Urdu', 'Tajawal', sans-serif;
-    font-size: 22px;
-    text-align: right;
-    min-height: 130px;
-  }
+.output-box {
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  font-family:'Noto Nastaliq Urdu', 'Tajawal', sans-serif;
+  font-size:22px;
+  text-align:right;
+  min-height:130px;
+  resize:none;
+}
 
-  .button {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 18px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 15px;
-    transition: 0.3s;
-  }
+.button {
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:18px;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-bottom:15px;
+  transition:0.3s;
+}
 
-  .convert-btn {
-    background: #3fa9ff;
-    color: #fff;
-    box-shadow: 0 0 12px #3fa9ff, 0 0 25px #3fa9ff44;
-  }
+.convert-btn {
+  background:#3fa9ff;
+  color:#fff;
+  box-shadow:0 0 12px #3fa9ff, 0 0 25px #3fa9ff44;
+}
 
-  .copy-btn {
-    background: #00ff7f;
-    color: #000;
-    box-shadow: 0 0 12px #00ff7f, 0 0 25px #00ff7f44;
-  }
+.copy-btn {
+  background:#00ff7f;
+  color:#000;
+  box-shadow:0 0 12px #00ff7f, 0 0 25px #00ff7f44;
+}
 
-  .whatsapp-btn {
-    background: #25d366;
-    color: #fff;
-    box-shadow: 0 0 12px #25d366, 0 0 25px #25d36644;
-  }
+.whatsapp-btn {
+  background:#25d366;
+  color:#fff;
+  box-shadow:0 0 12px #25d366, 0 0 25px #25d36644;
+}
 
-  .button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px #fff, 0 0 50px #fff33;
-  }
-
+.button:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 25px #fff, 0 0 50px #fff33;
+}
 </style>
 </head>
 <body>
 
 <div class="converter-card">
-  <h1>👻 Ghosty Urdu Converter</h1>
+<h1>👻 Ghosty Urdu Converter</h1>
 
-  <input class="input-box" type="text" id="englishText" placeholder="Type English words here... ✍️">
+<input class="input-box" type="text" id="englishText" placeholder="Type English words here... ✍️">
 
-  <button class="button convert-btn" onclick="convertToUrdu()">🪄 Convert to Urdu</button>
+<button class="button convert-btn" onclick="convertToUrdu()">🪄 Convert to Urdu</button>
 
-  <textarea class="output-box" id="urduText" placeholder="Urdu text will appear here..." readonly></textarea>
+<textarea class="output-box" id="urduText" placeholder="اردو یہاں ظاہر ہوگی..." readonly></textarea>
 
-  <button class="button copy-btn" onclick="copyUrdu()">📋 Copy</button>
-  <button class="button whatsapp-btn" onclick="joinGroup()">👥 Join WhatsApp Group</button>
+<button class="button copy-btn" onclick="copyUrdu()">📋 Copy</button>
+<button class="button whatsapp-btn" onclick="joinGroup()">👥 Join WhatsApp Group</button>
+
 </div>
 
 <script>
-  const urduMap = {
-    'a':'ا','b':'ب','c':'ک','d':'د','e':'ے','f':'ف','g':'گ','h':'ہ','i':'ی',
-    'j':'ج','k':'ک','l':'ل','m':'م','n':'ن','o':'و','p':'پ','q':'ق','r':'ر',
-    's':'س','t':'ت','u':'ُ','v':'و','w':'و','x':'کس','y':'ی','z':'ز',' ':' '
-  };
+// Basic English → Urdu transliteration mapping
+const urduMap = {
+  'a':'ا','b':'ب','c':'ک','d':'د','e':'ے','f':'ف','g':'گ','h':'ہ','i':'ی',
+  'j':'ج','k':'ک','l':'ل','m':'م','n':'ن','o':'و','p':'پ','q':'ق','r':'ر',
+  's':'س','t':'ت','u':'ُ','v':'و','w':'و','x':'کس','y':'ی','z':'ز',' ':' '
+};
 
-  function convertToUrdu() {
-    const input = document.getElementById('englishText').value.toLowerCase();
-    let result = '';
-    for(let char of input) result += urduMap[char] || char;
-    document.getElementById('urduText').value = result;
-  }
+function convertToUrdu(){
+  const input = document.getElementById('englishText').value.toLowerCase();
+  let result = '';
+  for(let char of input) result += urduMap[char] || char;
+  document.getElementById('urduText').value = result;
+}
 
-  function copyUrdu() {
-    const urdu = document.getElementById('urduText');
-    urdu.select();
-    urdu.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(urdu.value);
-    alert('✅ Copied to clipboard!');
-  }
+function copyUrdu(){
+  const urdu = document.getElementById('urduText');
+  urdu.select();
+  urdu.setSelectionRange(0,99999);
+  navigator.clipboard.writeText(urdu.value);
+  alert('✅ Copied to clipboard!');
+}
 
-  function joinGroup() {
-    window.open('https://chat.whatsapp.com/HVM9Spvm7HVGLERj8yo9kS', '_blank');
-  }
+function joinGroup(){
+  window.open('https://chat.whatsapp.com/HVM9Spvm7HVGLERj8yo9kS','_blank');
+}
 </script>
 
 </body>
