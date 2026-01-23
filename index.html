@@ -9,16 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Tajawal:wght@400;700&family=Cairo:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
 
 <style>
-  /* Dark Ghosty Theme */
+  /* Ghosty Dark Theme */
   :root {
     --bg: #05060a;
     --card: rgba(20, 25, 40, 0.95);
-    --blue: #3fa9ff;
+    --blue: #1a75ff;
     --green: #00ff7f;
     --yellow: #ffd700;
     --white: #ffffff;
     --shadow: 0 8px 25px rgba(0,0,0,0.8);
-    --glow: 0 0 12px #3fa9ff, 0 0 20px #3fa9ff66, 0 0 30px #3fa9ff44;
+    --glow: 0 0 12px #1a75ff, 0 0 20px #1a75ff66, 0 0 30px #1a75ff44;
   }
 
   body {
@@ -56,40 +56,53 @@
     margin-bottom: 20px;
   }
 
-  input, textarea {
+  /* Input box with blue background */
+  input {
     width: 100%;
     padding: 16px 22px;
     border-radius: 15px;
     border: none;
     font-size: 18px;
     font-family: 'Tajawal', sans-serif;
-    background: rgba(255,255,255,0.05);
+    background: var(--blue);
     color: var(--white);
-    box-shadow: 0 0 8px rgba(255,255,255,0.1);
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
     transition: 0.3s;
     outline: none;
   }
 
-  /* Placeholder underlined nicely */
-  input::placeholder, textarea::placeholder {
-    color: var(--blue);
+  input::placeholder {
+    color: #cce0ff;
+    font-weight: 500;
     text-decoration: underline;
     text-underline-offset: 4px;
-    font-weight: 500;
   }
 
-  input:focus, textarea:focus {
+  input:focus {
     box-shadow: var(--glow);
   }
 
+  /* Output textarea with any nice Ghosty color */
   textarea {
-    min-height: 130px;
+    width: 100%;
+    padding: 16px 22px;
+    border-radius: 15px;
+    border: none;
     font-family: 'Noto Nastaliq Urdu', 'Tajawal', sans-serif;
     font-size: 24px;
     resize: none;
     text-align: right;
     line-height: 1.5;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    transition: 0.3s;
+  }
+
+  textarea::placeholder {
+    color: #ccc;
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 
   button {
