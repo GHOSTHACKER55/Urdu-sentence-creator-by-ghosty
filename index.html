@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English to Urdu Translator • Ghosty</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -70,10 +69,6 @@ button{
     background:linear-gradient(135deg,#2196f3,#21cbf3);
     box-shadow:0 0 20px rgba(33,150,243,.7);
     cursor:pointer;
-    transition:.2s;
-}
-button:hover{
-    transform:scale(1.05);
 }
 .whatsapp{
     display:block;
@@ -128,25 +123,22 @@ function translateText(){
 
     document.getElementById("output").value = "ترجمہ ہو رہا ہے...";
 
-    fetch("https://libretranslate.de/translate",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            q:text,
-            source:"en",
-            target:"ur",
-            format:"text"
-        })
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        document.getElementById("output").value = data.translatedText;
-    })
-    .catch(()=>{
-        document.getElementById("output").value = "Translation failed. Try again.";
-    });
+    const script = document.createElement("script");
+    const callbackName = "cb_" + Math.random().toString(36).substring(2);
+
+    window[callbackName] = function(response){
+        document.getElementById("output").value =
+            response.responseData.translatedText;
+        document.body.removeChild(script);
+        delete window[callbackName];
+    };
+
+    script.src =
+        "https://api.mymemory.translated.net/get?q=" +
+        encodeURIComponent(text) +
+        "&langpair=en|ur&callback=" + callbackName;
+
+    document.body.appendChild(script);
 }
 </script>
 
