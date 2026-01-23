@@ -114,36 +114,33 @@ button{
 </div>
 
 <script>
-// Simple English to Urdu dictionary
-const dictionary = {
-    "hello": "ہیلو",
-    "world": "دنیا",
-    "friend": "دوست",
-    "love": "محبت",
-    "food": "کھانا",
-    "water": "پانی",
-    "good": "اچھا",
-    "bad": "برا",
-    "morning": "صبح",
-    "night": "رات",
-    "how": "کیسے",
-    "are": "ہیں",
-    "you": "آپ",
-    "i": "میں",
-    "am": "ہوں",
-    "thank": "شکریہ",
-    "please": "براہ کرم"
-};
+async function translateText() {
+    const text = document.getElementById("input").value.trim();
+    const output = document.getElementById("output");
 
-function translateText() {
-    const input = document.getElementById("input").value.trim().toLowerCase();
-    if(!input){
+    if(!text){
         alert("Please enter English text");
         return;
     }
-    const words = input.split(" ");
-    const translated = words.map(word => dictionary[word] || word).join(" ");
-    document.getElementById("output").value = translated;
+
+    output.value = "ترجمہ ہو رہا ہے...";
+
+    try {
+        // Using the free API
+        const url = `https://translator.bjcoderx.workers.dev/?text=${encodeURIComponent(text)}&fr=en&to=ur`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if(data && data.translated){
+            output.value = data.translated;
+        } else {
+            output.value = "ترجمہ دستیاب نہیں ہے۔";
+        }
+    } catch(err){
+        console.error(err);
+        output.value = "Error: Translation failed.";
+    }
 }
 </script>
 
