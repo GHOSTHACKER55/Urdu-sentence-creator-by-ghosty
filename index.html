@@ -1,158 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English to Urdu Translator • Ghosty</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:radial-gradient(circle at top,#0a1a3a,#000);
-    font-family:'Poppins',sans-serif;
-    color:#fff;
-}
-.card{
-    width:100%;
-    max-width:400px;
-    padding:28px 22px;
-    border-radius:18px;
-    background:rgba(0,0,0,.65);
-    backdrop-filter:blur(12px);
-    box-shadow:0 0 35px rgba(0,140,255,.45);
-    border:1px solid rgba(0,140,255,.4);
-    text-align:center;
-}
-.brand{
-    font-family:'Orbitron',sans-serif;
-    font-size:26px;
-    color:#4fc3ff;
-    text-shadow:0 0 12px rgba(79,195,255,.9);
-}
-.subtitle{
-    font-size:14px;
-    color:#cfd8dc;
-    margin-bottom:16px;
-}
-textarea{
-    width:100%;
-    min-height:110px;
-    border:none;
-    border-radius:12px;
-    padding:12px;
-    margin-bottom:12px;
-    background:rgba(255,255,255,.08);
-    color:#fff;
-    outline:none;
-    resize:none;
-}
-#output{
-    font-family:'Noto Nastaliq Urdu',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:16px;
-}
-button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:50px;
-    font-size:16px;
-    font-weight:600;
-    color:#fff;
-    background:linear-gradient(135deg,#2196f3,#21cbf3);
-    box-shadow:0 0 20px rgba(33,150,243,.7);
-    cursor:pointer;
-}
-.whatsapp{
-    display:block;
-    margin-top:14px;
-    padding:14px;
-    border-radius:50px;
-    text-decoration:none;
-    background:linear-gradient(135deg,#25D366,#1ebe5d);
-    box-shadow:0 0 20px rgba(37,211,102,.7);
-    color:#fff;
-    font-weight:600;
-}
-.footer{
-    margin-top:14px;
-    font-size:12px;
-    color:#90caf9;
-}
-.footer span{
-    color:#4fc3ff;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English to Urdu Translator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 0;
+    }
+    #output {
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
 </head>
-
 <body>
+  <h2>English to Urdu Translator</h2>
+  <input type="text" id="englishWord" placeholder="Type English word">
+  <button onclick="translate()">Translate</button>
 
-<div class="card">
-    <div class="brand">GHOSTY</div>
-    <div class="subtitle">English → Urdu Translator</div>
+  <div id="output"></div>
 
-    <textarea id="input" placeholder="Enter English text..."></textarea>
+  <script>
+    const dictionary = {
+      "hello": "ہیلو",
+      "world": "دنیا",
+      "friend": "دوست",
+      "love": "محبت",
+      "food": "کھانا"
+    };
 
-    <button onclick="translateText()">Translate to Urdu</button>
-
-    <textarea id="output" placeholder="اردو ترجمہ یہاں ظاہر ہوگا"></textarea>
-
-    <a class="whatsapp" href="https://chat.whatsapp.com/YOUR_GROUP_LINK" target="_blank">
-        Join WhatsApp Group
-    </a>
-
-    <div class="footer">
-        Developed by <span>Ghosty</span>
-    </div>
-</div>
-
-<script>
-async function translateText() {
-    const text = document.getElementById("input").value.trim();
-    if (!text) {
-        alert("Please enter English text");
-        return;
+    function translate() {
+      const word = document.getElementById("englishWord").value.toLowerCase();
+      const output = dictionary[word] || "Word not found in dictionary";
+      document.getElementById("output").innerText = output;
     }
-    const output = document.getElementById("output");
-    output.value = "ترجمہ ہو رہا ہے...";
-
-    try {
-        const apiKey = "https://api.microsofttranslator.com/V2/Http.svc/Translate"; // <-- Replace with your Google API key
-        const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                q: text,
-                source: "en",
-                target: "ur",
-                format: "text"
-            })
-        });
-
-        const data = await response.json();
-
-        if (data && data.data && data.data.translations && data.data.translations[0]) {
-            output.value = data.data.translations[0].translatedText;
-        } else {
-            output.value = "ترجمہ دستیاب نہیں ہے۔";
-        }
-    } catch (err) {
-        console.error(err);
-        output.value = "Error: Translation failed.";
-    }
-}
-</script>
-
+  </script>
 </body>
 </html>
