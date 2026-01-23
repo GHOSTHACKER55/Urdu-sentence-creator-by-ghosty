@@ -114,31 +114,36 @@ button{
 </div>
 
 <script>
-function translateText(){
+async function translateText() {
     const text = document.getElementById("input").value.trim();
     if(!text){
         alert("Please enter English text");
         return;
     }
 
-    document.getElementById("output").value = "ترجمہ ہو رہا ہے...";
+    const output = document.getElementById("output");
+    output.value = "ترجمہ ہو رہا ہے...";
 
-    const script = document.createElement("script");
-    const callbackName = "cb_" + Math.random().toString(36).substring(2);
+    try {
+        const response = await fetch("https://libretranslate.de/translate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                q: text,
+                source: "en",
+                target: "ur",
+                format: "text"
+            })
+        });
 
-    window[callbackName] = function(response){
-        document.getElementById("output").value =
-            response.responseData.translatedText;
-        document.body.removeChild(script);
-        delete window[callbackName];
-    };
-
-    script.src =
-        "https://api.mymemory.translated.net/get?q=" +
-        encodeURIComponent(text) +
-        "&langpair=en|ur&callback=" + callbackName;
-
-    document.body.appendChild(script);
+        const data = await response.json();
+        output.value = data.translatedText || "ترجمہ دستیاب نہیں ہے۔";
+    } catch (err) {
+        console.error(err);
+        output.value = "Error: Translation failed.";
+    }
 }
 </script>
 
