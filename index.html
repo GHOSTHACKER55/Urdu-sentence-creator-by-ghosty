@@ -80,4 +80,69 @@
     }
     .btn:hover{
         transform:scale(1.04);
-        box-shadow:0 0 30px rgba(33,150,243
+        box-shadow:0 0 30px rgba(33,150,243,1);
+    }
+    .btn-whatsapp{
+        display:block;
+        text-decoration:none;
+        padding:14px;
+        border-radius:50px;
+        background:linear-gradient(135deg,#25D366,#1ebe5d);
+        box-shadow:0 0 20px rgba(37,211,102,.7);
+        color:#fff;
+        font-weight:600;
+    }
+    .footer{
+        margin-top:16px;
+        font-size:12px;
+        color:#90caf9;
+    }
+    .footer span{
+        color:#4fc3ff;
+        font-weight:600;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="brand">GHOSTY</div>
+    <div class="subtitle">Any Language → Urdu Translator</div>
+
+    <textarea id="inputText" placeholder="Enter text in any language..."></textarea>
+
+    <button class="btn" onclick="translateText()">Translate to Urdu</button>
+
+    <textarea id="outputText" class="output" placeholder="اردو ترجمہ یہاں ظاہر ہوگا"></textarea>
+
+    <!-- Replace with your WhatsApp group link -->
+    <a class="btn-whatsapp" href="https://chat.whatsapp.com/YOUR_GROUP_LINK" target="_blank">
+        Join WhatsApp Group
+    </a>
+
+    <div class="footer">
+        Developed by <span>Ghosty</span>
+    </div>
+</div>
+
+<script>
+/*
+ NOTE:
+ This is UI + demo logic only.
+ For REAL "Any Language to Urdu" translation,
+ connect this button to a translation API (Google, Libre, etc.)
+*/
+function translateText(){
+    var input = document.getElementById("inputText").value;
+    if(!input){
+        alert("Please enter some text");
+        return;
+    }
+    document.getElementById("outputText").value =
+        "یہ صرف ڈیمو انٹرفیس ہے۔ اصل ترجمہ کے لیے API شامل کریں۔";
+}
+</script>
+
+</body>
+</html>
