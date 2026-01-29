@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ghosty HTML Deobfuscator</title>
+<title>Ghosty Base64 Deobfuscator</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
     body {
@@ -18,128 +18,97 @@
     }
     .container {
         width: 90%;
-        max-width: 800px;
-        background: rgba(0, 20, 20, 0.9);
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 0 25px #0ff;
+        max-width: 900px;
+        background: rgba(0, 15, 15, 0.95);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px #0ff;
         text-align: center;
     }
-    h1 { text-shadow: 0 0 10px #0ff; margin-bottom: 20px; }
+    h1 { text-shadow: 0 0 10px #0ff; font-size: 22px; }
     textarea {
         width: 100%;
-        height: 200px;
+        height: 180px;
         background: #000;
         border: 1px solid #0ff;
         color: #0ff;
-        padding: 10px;
-        border-radius: 10px;
+        padding: 12px;
+        border-radius: 8px;
         font-family: monospace;
-        resize: none;
-        box-shadow: inset 0 0 10px #0ff;
-        margin-bottom: 15px;
-    }
-    .btn-group {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
+        margin-top: 10px;
+        outline: none;
     }
     .btn {
-        padding: 15px 25px;
+        margin: 15px 5px;
+        padding: 12px 20px;
         background: #000;
         color: #0ff;
         border: 1px solid #0ff;
-        border-radius: 10px;
         cursor: pointer;
-        text-transform: uppercase;
-        font-weight: bold;
+        font-family: 'Orbitron';
         transition: 0.3s;
-        box-shadow: 0 0 10px #0ff;
     }
     .btn:hover {
         background: #0ff;
         color: #000;
-        box-shadow: 0 0 20px #0ff;
+        box-shadow: 0 0 15px #0ff;
     }
-    .output-label {
-        margin-top: 20px;
-        display: block;
-        text-align: left;
-        font-size: 12px;
-        opacity: 0.8;
-    }
-    footer { margin-top: 20px; font-size: 10px; opacity: 0.6; }
+    .status { font-size: 10px; color: #555; margin-top: 5px; }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>GHOSTY DEOBFUSCATOR</h1>
-    <p style="font-size: 12px;">Paste obfuscated HTML/JS below</p>
+    <h1>GHOSTY BASE64 DECODER</h1>
+    <p style="font-size: 11px;">Paste the protected <code>var d = "..."</code> string or the full code</p>
     
-    <textarea id="inputCode" placeholder="Paste your messy code here..."></textarea>
+    <textarea id="inputArea" placeholder="Paste the Base64 string here..."></textarea>
     
-    <div class="btn-group">
-        <button class="btn" onclick="deobfuscate()">Deobfuscate</button>
-        <button class="btn" onclick="clearAll()">Clear</button>
-        <button class="btn" onclick="copyResult()">Copy Result</button>
+    <div class="controls">
+        <button class="btn" onclick="crackBase64()">DEOBFUSCATE</button>
+        <button class="btn" onclick="copyResult()">COPY CLEAN CODE</button>
     </div>
 
-    <span class="output-label">Cleaned Output:</span>
-    <textarea id="outputCode" placeholder="Cleaned code will appear here..." readonly></textarea>
-
-    <footer>POWERED BY GHOSTY NETWORK</footer>
+    <textarea id="outputArea" placeholder="Clean HTML source will appear here..." readonly></textarea>
+    <div class="status" id="status">Ready for input</div>
+    
+    <footer style="margin-top: 20px; font-size: 10px; opacity: 0.5;">GHOSTY NETWORK SECURITY TOOL</footer>
 </div>
 
 <script>
-    function deobfuscate() {
-        let code = document.getElementById('inputCode').value;
-
-        try {
-            // 1. Handle Hex Encoded Strings (\xXX)
-            code = code.replace(/\\x([0-9A-Fa-f]{2})/g, (match, hex) => {
-                return String.fromCharCode(parseInt(hex, 16));
-            });
-
-            // 2. Handle Unicode Encoded Strings (\uXXXX)
-            code = code.replace(/\\u([0-9A-Fa-f]{4})/g, (match, hex) => {
-                return String.fromCharCode(parseInt(hex, 16));
-            });
-
-            // 3. Basic HTML Unescape
-            const doc = new DOMParser().parseFromString(code, "text/html");
-            code = doc.documentElement.textContent;
-
-            // 4. Simple Formatting (Beautify logic)
-            let tab = 0;
-            let result = '';
-            const tokens = code.split(/>/);
-            
-            for (let i = 0; i < tokens.length; i++) {
-                let line = tokens[i].trim();
-                if (line.length > 0) {
-                    result += line + '>\n';
-                }
-            }
-
-            document.getElementById('outputCode').value = result || code;
-        } catch (e) {
-            alert("Error processing code. Make sure it's valid obfuscated text.");
-        }
+function crackBase64() {
+    let input = document.getElementById('inputArea').value;
+    let status = document.getElementById('status');
+    
+    try {
+        // Step 1: Extract the string inside quotes if they pasted the whole script
+        let b64Match = input.match(/"([^"]+)"/);
+        let b64String = b64Match ? b64Match[1] : input.trim();
+        
+        // Step 2: Decode Base64 (atob)
+        let decoded = atob(b64String);
+        
+        // Step 3: Handle URI Encoding (the escape/decodeURIComponent part)
+        // This handles special characters often used in these wrappers
+        let finalHtml = decodeURIComponent(escape(decoded));
+        
+        // Step 4: Display & Format
+        document.getElementById('outputArea').value = finalHtml;
+        status.innerText = "SUCCESS: Code Unwrapped";
+        status.style.color = "#0f0";
+    } catch (err) {
+        document.getElementById('outputArea').value = "ERROR: Could not decode. Make sure you only paste the Base64 string or the full script correctly.";
+        status.innerText = "FAILED: Invalid Base64 Pattern";
+        status.style.color = "#f00";
     }
+}
 
-    function clearAll() {
-        document.getElementById('inputCode').value = '';
-        document.getElementById('outputCode').value = '';
-    }
-
-    function copyResult() {
-        const copyText = document.getElementById("outputCode");
-        copyText.select();
-        document.execCommand("copy");
-        alert("Copied to clipboard!");
-    }
+function copyResult() {
+    const output = document.getElementById("outputArea");
+    output.select();
+    document.execCommand("copy");
+    alert("Clean code copied!");
+}
 </script>
 
 </body>
